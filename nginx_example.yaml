@@ -1,0 +1,64 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx
+  annotations:
+    service.beta.kubernetes.io/openstack-internal-load-balancer: "false"
+    loadbalancer.openstack.org/floating-network-id: "bf66495a-4c0d-4725-88c0-462198f1b1fc"
+spec:
+  selector:
+    app: nginx
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    ignore-volume-az: yes
+  name: nginx-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+      name: nginx
+    spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+         claimName: nginx-data
+      containers:
+      - image: nginx
+        imagePullPolicy: IfNotPresent
+        name: webserver
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: "/data"
+            name: data
+        stdin: true
+        tty: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
