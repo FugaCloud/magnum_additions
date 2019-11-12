@@ -1,4 +1,3 @@
-
 Magnum additions
 ----------------
 
@@ -13,7 +12,7 @@ This is because Magnum still enables port security on the created network,
 and we are now using network without it, because of the Contrail 'addres pair
 limitation'.
 
-deploy.sh
+deploy_cluster.sh
 ---------
 
 This will create a network, subnet, template and cluster.
