@@ -13,7 +13,7 @@ and we are now using network without it, because of the Contrail 'addres pair
 limitation'.
 
 deploy_cluster.sh
----------
+-----------------
 
 This will create a network, subnet, template and cluster.
 After the installation is complete, usually around 20 minutes, you can retrieve
