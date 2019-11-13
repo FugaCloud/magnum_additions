@@ -32,7 +32,7 @@ if ! openstack coe cluster template create --image "$image" \
   --volume-driver cinder \
   --network-driver flannel \
   --docker-volume-size 40 \
-  ${name}-template
+  ${name}
 
   then
     echo "error while creating the cluster template"
@@ -40,7 +40,7 @@ if ! openstack coe cluster template create --image "$image" \
 fi
 
 # create the cluster
-if ! openstack coe cluster create --cluster-template ${name}-template -–master-lb-enabled --master-count 1 --node-count $node_count --keypair $keypair ${name}
+if ! openstack coe cluster create --cluster-template ${name} --master-count 1 --node-count $node_count --keypair $keypair ${name}
   then
     echo "error while creating cluster"
     exit 1
