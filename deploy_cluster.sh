@@ -40,7 +40,7 @@ if ! openstack coe cluster template create --image "$image" \
 fi
 
 # create the cluster
-if ! openstack coe cluster create --cluster-template ${name}-template -–master-lb-enabled --master-count 1 --node-count $node_count --keypair $keypair ${name}-cluster
+if ! openstack coe cluster create --cluster-template ${name}-template -–master-lb-enabled --master-count 1 --node-count $node_count --keypair $keypair ${name}
   then
     echo "error while creating cluster"
     exit 1
