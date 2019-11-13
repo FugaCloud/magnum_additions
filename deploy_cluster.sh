@@ -11,8 +11,7 @@ fi
 
 # tweak settings
 master_flavor="p2.xlarge"
-master_count="1"
-node_count="1"
+node_count="2"
 node_flavor="p2.xlarge"
 name="$1"
 keypair="$2"
@@ -41,7 +40,7 @@ if ! openstack coe cluster template create --image "$image" \
 fi
 
 # create the cluster
-if ! openstack coe cluster create --cluster-template ${name}-template --master-count $master_count --node-count $node_count --keypair $keypair ${name}-cluster
+if ! openstack coe cluster create --cluster-template ${name}-template -–master-lb-enabled --master-count 1 --node-count $node_count --keypair $keypair ${name}-cluster
   then
     echo "error while creating cluster"
     exit 1
