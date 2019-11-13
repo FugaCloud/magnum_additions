@@ -7,15 +7,9 @@ with Magnum.
 
 Make sure you have a working openstack-cli ready and a kubectl matching 1.11.1.
 
-Currently we create our network and subnet ourselves before we run Magnum.
-This is because Magnum still enables port security on the created network,
-and we are now using network without it, because of the Contrail 'addres pair
-limitation'.
-
 deploy_cluster.sh
 -----------------
 
-This will create a network, subnet, template and cluster.
 After the installation is complete, usually around 20 minutes, you can retrieve
 the cluster config:
 
@@ -47,6 +41,7 @@ If you apply this, Kubernetes can use Cinder for pv's. It will become the
 default storage class.
 
 kubectl apply -f storageclass.yaml
+
 
 nginx_example.yaml
 ------------------
