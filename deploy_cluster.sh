@@ -25,7 +25,16 @@ dhcp_end="10.65.0.20"
 # when using a name is breaks because it cannot find os_distro?
 image="ac6c15cc-9073-4537-98d9-00f4ccfefa25"
 
-if ! openstack coe cluster template create --image "$image" --external-network public --master-flavor $master_flavor --flavor $node_flavor --coe kubernetes --volume-driver cinder --network-driver flannel --docker-volume-size 40 ${name}-template
+if ! openstack coe cluster template create --image "$image" \
+  --external-network public \
+  --master-flavor $master_flavor \
+  --flavor $node_flavor \
+  --coe kubernetes \
+  --volume-driver cinder \
+  --network-driver flannel \
+  --docker-volume-size 40 \
+  ${name}-template
+
   then
     echo "error while creating the cluster template"
     exit 1
