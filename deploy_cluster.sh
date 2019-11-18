@@ -2,17 +2,24 @@
 
 if [ ! "$2" ]
   then
-    echo "usage: $0 cluster_name key_name"
+    echo "usage: $0 cluster_name key_name [kube_version_tag]"
+    echo -e "\nExample: $0 mycluster mykeypair v1.16.2 (experimental)"
+    echo -e "\nExample: $0 mycluster mykeypair (installs 1.11.6)"
     exit 1
+fi
+
+# if a user defines the version_tag, use it
+if [ "$3" ]
+  then
+    version_tag="$3"
+  else
+    version_tag="v1.11.6"
 fi
 
 # tweak settings
 master_flavor="p2.xlarge"
-node_count="2"
+node_count="1"
 node_flavor="p2.xlarge"
-# currently the only verified version which deploys a working
-# cloud controller is 1.11.1
-version_tag="v1.11.1"
 
 name="$1"
 keypair="$2"
@@ -42,30 +49,30 @@ create_template() {
   fi
 }
 
-# verify if the template exists, a user might re-use the name
-templates="$(openstack coe cluster template list -f json | jq -r .[].name)"
+verify_template() {
+  # verify if the template exists, a user might re-use the name
+  dupe="0"
+  templates="$(openstack coe cluster template list -f json | jq -r .[].name)"
+  for template in $templates
+  do
+    if [ "$template" == "$name" ]
+      then
+        dupe="1"
+    fi
+  done
+  return $dupe
+}
 
-echo $templates
-dupe=""
-for template in $templates
-do
-  if [ "$template" == "$name" ]
-    then
-      dupe="true"
-  fi
-done
-if [ ! "$dupe" == "true" ]
+if verify_template
   then
     create_template
   else
     echo "found a cluster template with the same name, skipping creation"
 fi
-echo "failsafe"
-exit 0
+
 # create the cluster
 if ! openstack coe cluster create --cluster-template ${name} --master-count 1 --node-count $node_count --keypair $keypair ${name}
   then
     echo "error while creating cluster"
     exit 1
 fi
-
