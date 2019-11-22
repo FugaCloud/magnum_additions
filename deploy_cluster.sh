@@ -16,9 +16,15 @@ if [ "$3" ]
     version_tag="v1.11.6"
 fi
 
+if [ "$4" ]
+  then
+    node_count="$4"
+  else
+    node_count="1"
+fi
+
 # tweak settings
 master_flavor="p2.xlarge"
-node_count="1"
 node_flavor="p2.xlarge"
 
 name="$1"
