@@ -13,7 +13,7 @@ if [ "$3" ]
   then
     version_tag="$3"
   else
-    version_tag="v1.11.6"
+    version_tag="v1.13.10"
 fi
 
 if [ "$4" ]
