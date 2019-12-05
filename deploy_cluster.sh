@@ -30,11 +30,6 @@ node_flavor="p2.xlarge"
 name="$1"
 keypair="$2"
 
-# you can re-use this for multiple clusters
-cidr="10.65.0.0/24"
-dhcp_start="10.65.0.1"
-dhcp_end="10.65.0.20"
-
 # when using a name is breaks because it cannot find os_distro?
 image="ac6c15cc-9073-4537-98d9-00f4ccfefa25"
 
