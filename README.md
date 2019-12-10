@@ -39,6 +39,7 @@ This should now should your cluster
 nodes.sh
 --------
 
+make sure that if you run kubectl get nodes, you see the nodes you expect.
 This will label all found nodes with label: 
 
 failure-domain.beta.kubernetes.io/zone=nova
