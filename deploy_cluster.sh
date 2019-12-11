@@ -3,8 +3,7 @@
 if [ ! "$2" ]
   then
     echo "usage: $0 cluster_name key_name [kube_version_tag]"
-    echo -e "\nExample: $0 mycluster mykeypair v1.16.2 (experimental)"
-    echo -e "\nExample: $0 mycluster mykeypair (installs 1.11.6)"
+    echo -e "\nExample: $0 mycluster mykeypair (installs 1.13.10)"
     exit 1
 fi
 
