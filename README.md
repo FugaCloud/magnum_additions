@@ -1,6 +1,19 @@
 Magnum additions
 ----------------
 
+
+todo:
+
+--8K--
+pip install -r requirement.txt (cleanup)
+requirement.txt
+jq
+kubectl installation (match version?) (brew/curl|wget/apt/yum)
+lbaas -> sgroup  link?
+--8K--
+
+kube-dns crashloop -> resolve/delete
+
 These are files to aid in using our installation of Magnum in OpenStack.  We
 are currently in 'internal-beta' mode and these files can help you get started
 with Magnum.
@@ -12,6 +25,8 @@ First make sure the openstack command works and you have all the required
 Python modules (openstack modules, python-magnumclient)
 
 ./deploy_cluster.sh $name_of_cluster $keypair_name [$version_tag]
+
+* explain version
 
 tested version is v1.13.10, this is also the default in the script, other
 versions can cause issues, please avoid them for now.
@@ -36,7 +51,7 @@ kubectl get nodes
 This should now should your cluster
 
 
-nodes.sh
+node.sh
 --------
 
 make sure that if you run kubectl get nodes, you see the nodes you expect.
@@ -60,6 +75,9 @@ nginx_example.yaml
 ------------------
 
 A complete deployment with persistent volume, load balancer and pod.
+
+kubectl apply -f nginx_example.yaml
+
 This should create a pvc, pv, svc and deployment. Once allocated it will show
 the external IP of the loadbalancer in the output:
 
@@ -70,4 +88,7 @@ After a short while, at least a few minutes, you should be able to
 curl $ip_of_loadbalancer
 
 
+deletion
+--------
 
+wipe objects first->stuck heat
